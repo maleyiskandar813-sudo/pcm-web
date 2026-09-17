@@ -1,0 +1,319 @@
+@import 'tailwindcss';
+
+@source '../../vendor/laravel/framework/src/Illuminate/Pagination/resources/views/*.blade.php';
+@source '../../storage/framework/views/*.php';
+
+@theme {
+    --font-sans: 'Instrument Sans', 'LT Internet', ui-sans-serif, system-ui, sans-serif,
+        'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
+
+    --color-brand-navy: #1a2a75;
+    --color-brand-green: #079c4e;
+    --color-brand-gold: #f1b12d;
+    --color-brand-indigo: #2c368b;
+    --color-brand-cyan: #00ffd5;
+    --color-brand-teal: #10816f;
+    --color-brand-soft: #f8f9fc;
+}
+
+/* ===== Brand font (placeholder dari referensi, lisensi tercatat di README) ===== */
+@font-face {
+    font-family: 'LT Internet';
+    src: url('/fonts/LTInternet-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'LT Internet';
+    src: url('/fonts/LTInternet-Bold.ttf') format('truetype');
+    font-weight: 700;
+    font-style: normal;
+    font-display: swap;
+}
+
+/* ===== Base ===== */
+body {
+    font-family: var(--font-sans);
+    color: #333333;
+    background-color: #ffffff;
+}
+
+main {
+    margin-top: 70px;
+}
+
+.page-title {
+    color: #2c368b;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.sub-title {
+    color: #2c368b;
+    font-size: 1.4rem;
+    font-weight: 600;
+    border-left: 4px solid #f1b12d;
+    padding-left: 0.75rem;
+}
+
+.sub-title-sm {
+    color: #2c368b;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border-left: 4px solid #f1b12d;
+    padding-left: 0.75rem;
+}
+
+/* ===== Navbar (replikasi referensi) ===== */
+.navbar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 80px;
+    background: linear-gradient(90deg, #1a2a75, #079c4e);
+    color: #ffffff;
+    z-index: 50;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.navbar .logo {
+    height: 55px;
+    object-fit: contain;
+    transition: transform 0.3s ease;
+}
+
+.navbar .logo:hover {
+    transform: scale(1.05);
+}
+
+.nav-link {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.5rem 0.75rem;
+    color: #ffffff;
+    font-weight: 500;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.nav-link:hover {
+    color: #00ffd5;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 0;
+    height: 2px;
+    background: #00ffd5;
+    transition: width 0.3s ease;
+}
+
+.nav-link:hover::after,
+.nav-link.active::after {
+    width: 60%;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-content {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 220px;
+    background: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.25s ease, transform 0.25s ease, visibility 0.25s;
+    z-index: 60;
+    overflow: hidden;
+}
+
+.dropdown:hover .dropdown-content {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown-content a {
+    display: block;
+    padding: 0.6rem 1rem;
+    color: #333333;
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+.dropdown-content a:hover {
+    background-color: #10816f;
+    color: #ffffff;
+}
+
+.navbar-toggle {
+    display: none;
+}
+
+@media (max-width: 991px) {
+    .navbar-menu-desktop {
+        display: none;
+    }
+
+    .navbar-toggle {
+        display: inline-flex;
+    }
+}
+
+/* ===== Mobile drawer (gradient penuh) ===== */
+.mobile-drawer {
+    position: fixed;
+    inset: 0;
+    z-index: 45;
+    background: linear-gradient(135deg, #1a2a75, #079c4e);
+    transform: translateX(100%);
+    transition: transform 0.3s ease;
+    overflow-y: auto;
+}
+
+.mobile-drawer.open {
+    transform: translateX(0);
+}
+
+.mobile-drawer .drawer-link {
+    display: block;
+    padding: 0.9rem 1.5rem;
+    color: #ffffff;
+    text-decoration: none;
+    font-weight: 500;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+/* ===== Hero ===== */
+.hero {
+    position: relative;
+}
+
+/* ===== Animasi fade-up (referensi) ===== */
+.hero-tagline-item {
+    transition: opacity 0.8s ease-in-out;
+}
+
+.fade-up {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+}
+
+.fade-up.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .fade-up {
+        opacity: 1;
+        transform: none;
+        transition: none;
+    }
+
+    .nav-link::after,
+    .navbar .logo,
+    .dropdown-content {
+        transition: none;
+    }
+}
+
+/* ===== Footer (replikasi referensi) ===== */
+.footer {
+    background: linear-gradient(to top right, #1a2a75, #079c4e);
+    color: #ffffff;
+    padding: 20px 0 30px;
+    border-top: 4px solid #f1b12d;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    gap: 30px;
+}
+
+.footer-column {
+    flex: 1;
+    min-width: 260px;
+}
+
+.footer-logo {
+    max-width: 300px;
+    filter: brightness(0) invert(1);
+}
+
+.footer-column h4 {
+    border-left: 4px solid #f1b12d;
+    padding-left: 0.6rem;
+    margin-bottom: 1rem;
+    font-size: 1.1rem;
+    font-weight: 600;
+}
+
+.footer a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.3s ease, transform 0.3s ease;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.footer a:hover {
+    color: #f1b12d;
+    transform: translateY(-2px);
+}
+
+.footer-bottom {
+    border-top: 1px solid rgba(255, 255, 255, 0.2);
+    margin-top: 24px;
+    padding-top: 18px;
+}
+
+/* ===== Tabel struktur (Profil) ===== */
+.struktur-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.struktur-table th {
+    background: #2c368b;
+    color: #ffffff;
+    padding: 0.6rem 1rem;
+    text-align: left;
+}
+
+.struktur-table td {
+    padding: 0.6rem 1rem;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.struktur-table tr:nth-child(2n) {
+    background: #f3f6fa;
+}
+
+/* ===== Utility section ===== */
+.section-soft {
+    background-color: #f8f9fc;
+}
